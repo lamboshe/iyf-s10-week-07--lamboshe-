@@ -1,0 +1,18 @@
+Store Data
+localStorage.setItem("username", "John");
+
+Retrieve Data
+const username = localStorage.getItem("username");
+console.log(username);
+
+Remove Data
+localStorage.removeItem("username");
+
+Clear All Data
+localStorage.clear();
+
+Check if Key Exists
+if (localStorage.getItem("username")) {
+    console.log("User exists");
+}
+
