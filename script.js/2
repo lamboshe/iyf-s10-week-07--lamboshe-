@@ -1,0 +1,96 @@
+const user = {
+    name: "John",
+    age: 30,
+    hobbies: ["coding", "reading"]
+};
+
+localStorage.setItem("user", JSON.stringify(user));
+
+const retrieved = JSON.parse(localStorage.getItem("user"));
+
+console.log(retrieved);
+
+
+Storage Helper Functions
+function saveToStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getFromStorage(key, defaultValue = null) {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : defaultValue;
+}
+
+function removeFromStorage(key) {
+    localStorage.removeItem(key);
+}
+
+Storage Key
+const STORAGE_KEY = "todos";
+
+
+Load Todos
+function loadTodos() {
+    return getFromStorage(STORAGE_KEY, []);
+}
+
+Save Todos
+function saveTodos(todos) {
+    saveToStorage(STORAGE_KEY, todos);
+}
+
+
+Add Todo
+function addTodo(text) {
+    const newTodo = {
+        id: Date.now(),
+        text,
+        completed: false,
+        createdAt: new Date().toISOString()
+    };
+
+    const todos = loadTodos();
+
+    todos.push(newTodo);
+
+    saveTodos(todos);
+
+    renderTodos();
+}
+
+Toggle Todo
+function toggleTodo(id) {
+    const todos = loadTodos();
+
+    const todo = todos.find(t => t.id === id);
+
+    if (todo) {
+        todo.completed = !todo.completed;
+
+        saveTodos(todos);
+
+        renderTodos();
+    }
+}
+
+Delete Todo
+function deleteTodo(id) {
+    let todos = loadTodos();
+
+    todos = todos.filter(t => t.id !== id);
+
+    saveTodos(todos);
+
+    renderTodos();
+}
+sessionStorage
+sessionStorage.setItem(
+    "tempData",
+    "This disappears when tab closes"
+);
+
+localStorage
+localStorage.setItem(
+    "permanentData",
+    "This stays until cleared"
+);
